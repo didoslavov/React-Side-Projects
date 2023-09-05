@@ -86,7 +86,7 @@ body {
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     max-width: 80%;
-    height: 90%;
+    height: 95%;
     text-align: center;
 
     img {
@@ -98,17 +98,9 @@ body {
         border-top-right-radius: 5px;
     }
 
-    button {
-        padding: 10px 20px;
-        cursor: pointer;
-        background: var(--yellow);
-        color: var(--dark-blue);
-        border: 1px solid var(--blue-gray);
-        border-radius: 10px;
-    }
-
-    button:hover {
-        background-color: var(--blue-gray);
-        color: var(--pewter);
+    p {
+        margin: auto;
+        max-width: 50%;
+        text-align: center;
     }
 }
