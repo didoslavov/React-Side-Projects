@@ -4,9 +4,13 @@ import Header from './components/Header';
 import MovieCard from './components/MovieCard.jsx';
 
 function App() {
+    const API_KEY = import.meta.env.VITE_MOVIE_API_KEY;
     const MOVIE_API = 'https://api.themoviedb.org/3';
     const SEARCH_API = '/search/movie?query=';
     const DISCOVER_API = '/discover/movie';
+
+    const [movies, setMovies] = useState([]);
+    const [search, setSearch] = useState('');
 
     async function getMovies(search) {
         if (search) {
@@ -19,7 +23,7 @@ function App() {
             method: 'GET',
             headers: {
                 accept: 'application/json',
-                authorization: 'Bearer ' + import.meta.env.VITE_MOVIE_API_KEY,
+                authorization: 'Bearer ' + API_KEY,
             },
         };
 
@@ -38,8 +42,19 @@ function App() {
         }
     }
 
-    const [movies, setMovies] = useState([]);
-    const [search, setSearch] = useState('');
+    async function getMovieById(id) {
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                authorization: 'Bearer ' + API_KEY,
+            },
+        };
+        const data = await fetch(`${MOVIE_API}/movie/${id}?api_key=${API_KEY}&append_to_response=videos`, options);
+        const movie = await data.json();
+
+        return movie;
+    }
 
     useEffect(() => {
         getMovies(search)
@@ -57,7 +72,7 @@ function App() {
             <ul className="movie-list">
                 {movies.map((movie) => (
                     <li key={movie.id}>
-                        <MovieCard movie={movie} />
+                        <MovieCard movie={movie} getMovieById={getMovieById} />
                     </li>
                 ))}
             </ul>

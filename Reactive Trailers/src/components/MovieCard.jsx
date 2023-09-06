@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import HeroModal from './HeroModal.jsx';
 
-function MovieCard({ movie }) {
+function MovieCard({ movie, getMovieById }) {
     const [heroModal, setHeroModal] = useState(false);
 
     const showMore = () => {
@@ -19,7 +19,9 @@ function MovieCard({ movie }) {
                 alt="movie-image"
             />
             <h2>{movie.title}</h2>
-            {heroModal && <HeroModal title={movie.title} overview={movie.overview} image={movie.poster_path} />}
+            {heroModal && (
+                <HeroModal title={movie.title} overview={movie.overview} movieId={movie.id} getMovieById={getMovieById} />
+            )}
         </div>
     );
 }
