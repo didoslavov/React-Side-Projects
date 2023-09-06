@@ -8,8 +8,6 @@ function MovieCard({ movie }) {
         setHeroModal(!heroModal);
     };
 
-    console.log(movie);
-
     return (
         <div className="movie-card" onClick={showMore}>
             <img
