@@ -1,12 +1,20 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Header from './components/Header';
 import MovieCard from './components/MovieCard.jsx';
 
 function App() {
-    const API_URL = 'https://api.themoviedb.org/3';
+    const MOVIE_API = 'https://api.themoviedb.org/3';
+    const SEARCH_API = '/search/movie?query=';
+    const DISCOVER_API = '/discover/movie';
 
-    async function getMovies() {
+    async function getMovies(search) {
+        if (search) {
+            setSearch(search);
+        } else {
+            setSearch('');
+        }
+
         const options = {
             method: 'GET',
             headers: {
@@ -14,23 +22,38 @@ function App() {
                 authorization: 'Bearer ' + import.meta.env.VITE_MOVIE_API_KEY,
             },
         };
-        const data = await fetch(API_URL + '/discover/movie', options);
-        const movies = await data.json();
 
-        return movies;
+        try {
+            const data = await fetch(MOVIE_API + (search ? SEARCH_API + search : DISCOVER_API), options);
+
+            if (!data.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const movies = await data.json();
+            return movies;
+        } catch (error) {
+            console.error('Error fetching movies:', error);
+            throw error;
+        }
     }
 
     const [movies, setMovies] = useState([]);
+    const [search, setSearch] = useState('');
 
     useEffect(() => {
-        getMovies().then((movies) => {
-            setMovies(movies.results);
-        });
-    }, []);
+        getMovies(search)
+            .then((movies) => {
+                setMovies(movies.results);
+            })
+            .catch((error) => {
+                console.error('Error in useEffect:', error);
+            });
+    }, [search]);
 
     return (
         <>
-            <Header />
+            <Header searchMovie={getMovies} setSearch={setSearch} />
             <ul className="movie-list">
                 {movies.map((movie) => (
                     <li key={movie.id}>

@@ -1,11 +1,11 @@
 import React from 'react';
 import Search from './Search.jsx';
 
-function Header() {
+function Header({ searchMovie }) {
     return (
         <div className="main-header">
             <h1>Reactive Movie Trailers</h1>
-            <Search />
+            <Search searchMovie={searchMovie} />
         </div>
     );
 }

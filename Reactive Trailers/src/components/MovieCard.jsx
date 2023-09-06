@@ -8,9 +8,18 @@ function MovieCard({ movie }) {
         setHeroModal(!heroModal);
     };
 
+    console.log(movie);
+
     return (
         <div className="movie-card" onClick={showMore}>
-            <img src={'https://image.tmdb.org/t/p/w300' + movie.poster_path} alt="movie-image" />
+            <img
+                src={`${
+                    movie.poster_path == null
+                        ? '../../public/no_image.png'
+                        : 'https://image.tmdb.org/t/p/w300' + movie.poster_path
+                }`}
+                alt="movie-image"
+            />
             <h2>{movie.title}</h2>
             {heroModal && <HeroModal title={movie.title} overview={movie.overview} image={movie.poster_path} />}
         </div>
