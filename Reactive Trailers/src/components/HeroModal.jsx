@@ -8,9 +8,8 @@ function HeroModal({ movieId, title, overview, getMovieById }) {
         async function fetchTrailer() {
             try {
                 const response = await getMovieById(movieId);
-                const trailer = response.videos.results.find((t) => t.name === 'Official Trailer');
-                console.log(response.videos.results.find((t) => t.name == 'Official Trailer').key);
-
+                const trailer = response.videos.results.find((t) => t.type == 'Trailer');
+                console.log(response.videos.results);
                 if (trailer) {
                     setTrailerKey(trailer.key);
                 }
@@ -22,7 +21,6 @@ function HeroModal({ movieId, title, overview, getMovieById }) {
         fetchTrailer();
     }, [movieId]);
 
-    console.log(trailerKey);
     return (
         <div className="hero-modal">
             <div className="hero-content">
