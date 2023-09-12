@@ -1,10 +1,10 @@
-const AutoIncrement = require('mongoose-sequence')(mongoose);
 const {
     Schema,
     Types: { ObjectId },
     model,
     default: mongoose,
 } = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const noteSchema = new Schema(
     {
